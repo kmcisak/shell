@@ -5,36 +5,45 @@ import java.util.Map;
 
 public class CommandsProvider {
 
-	private Map<String, Command> commands;
+	private Map<CommandLine, Command> commands;
 	private Prompt prompt;
 
 	private CommandsProvider() {
 		commands = new HashMap<>();
 	}
 
-	public void addCommand(String name, Command command) {
-		commands.put(name, command);
+	public void addCommand(CommandLine commandLine, Command command) {
+		commands.put(commandLine, command);
 	}
 
-	public void executeCommand(String name) {
-		if (commands.containsKey(name)) {
-			commands.get(name).execute();
-		} else {
-			System.out.println(name + " : unknown command");
-			commands.get("prompt").execute();
+	public void executeCommand(CommandLine commandLine) {
+		if (commands.containsKey(commandLine)) {
+			commands.get(commandLine).execute();
+		} 
+//		else if (commandLine.getCommandName().equals("prompt")) {
+//			addCommand(new CommandLine("prompt"), new PromptParam(getPrompt(), commandLine.getCommandParameter()));
+		//		}
+	else {
+			System.out.println(commandLine.getCommandName() + " : unknown command");
 		}
+		
 
 	}
 
 	public static CommandsProvider init() {
 		CommandsProvider commandsProvider = new CommandsProvider();
-		commandsProvider.prompt = new Prompt("");
 
-		commandsProvider.addCommand("prompt", commandsProvider.getPrompt());
-		commandsProvider.addCommand("dir", new Dir());
-		commandsProvider.addCommand("tree", new Tree());
-		commandsProvider.addCommand("prompt reset", new PromptReset(commandsProvider.prompt));
-		commandsProvider.addCommand("prompt asd", new PromptParam(commandsProvider.prompt, "trololo"));
+		commandsProvider.prompt = new Prompt();
+
+		commandsProvider.addCommand(new CommandLine("prompt"), commandsProvider.getPrompt());
+
+		commandsProvider.addCommand(new CommandLine("prompt", "reset"), new PromptReset(commandsProvider.getPrompt()));
+
+		commandsProvider.addCommand(new CommandLine("dir"), new Dir());
+
+		commandsProvider.addCommand(new CommandLine("tree"), new Tree());
+
+		commandsProvider.addCommand(new CommandLine("exit"), new Exit());
 
 		return commandsProvider;
 	}

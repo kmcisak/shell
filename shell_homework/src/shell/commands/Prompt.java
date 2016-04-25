@@ -4,12 +4,8 @@ public class Prompt implements Command {
 
 	String parameter;
 
-	public Prompt(String parameter) {
-		if (parameter.equals("reset")) {
-			this.parameter = "$>";
-		} else {
-			this.parameter = parameter + ">";
-		}
+	public Prompt() {
+		this.parameter = " $>";
 	}
 
 	@Override

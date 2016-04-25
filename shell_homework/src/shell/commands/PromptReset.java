@@ -11,7 +11,7 @@ public class PromptReset implements Command {
 	@Override
 	public void execute() {
 		prompt.reset();
-		prompt.execute();
+		//prompt.execute();
 	}
 	
 	

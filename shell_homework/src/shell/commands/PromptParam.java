@@ -14,7 +14,7 @@ public class PromptParam implements Command {
 	@Override
 	public void execute() {
 		prompt.setParameter(parameter);
-		prompt.execute();
+		//prompt.execute();
 		
 	}
 
