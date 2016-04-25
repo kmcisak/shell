@@ -11,17 +11,14 @@ public class Main {
 		CommandsProvider commandsProvider = CommandsProvider.init();
 
 		Scanner in = new Scanner(System.in);
+		commandsProvider.executeCommand("prompt");
 
 		while (true) {
-			tmpPrompt();
+
 			commandsProvider.executeCommand(in.nextLine());
 
 		}
 
-	}
-
-	public static void tmpPrompt() {
-		System.out.print("[MyShell] $>");
 	}
 
 }
