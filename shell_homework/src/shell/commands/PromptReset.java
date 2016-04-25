@@ -1,5 +1,7 @@
 package shell.commands;
 
+import shell.commands.interfaces.Command;
+
 public class PromptReset implements Command {
 
 	Prompt prompt;
@@ -10,10 +12,10 @@ public class PromptReset implements Command {
 
 	@Override
 	public void execute() {
-		prompt.reset();
-		//prompt.execute();
+		reset();
 	}
 	
-	
-
+	private void reset(){
+		prompt.parameter = "$";
+	}
 }

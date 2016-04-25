@@ -1,15 +1,26 @@
-package shell.commands;
+package shell.commands.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import shell.commands.Dir;
+import shell.commands.Exit;
+import shell.commands.Prompt;
+import shell.commands.PromptCwd;
+import shell.commands.PromptReset;
+import shell.commands.Tree;
+import shell.commands.interfaces.Command;
 
 public class CommandsProvider {
 
 	private Map<CommandLine, Command> commands;
 	private Prompt prompt;
+	CommandCreator commandCreator;
 
 	private CommandsProvider() {
 		commands = new HashMap<>();
+		prompt = new Prompt("$");
+		commandCreator = new CommandCreator(prompt);
 	}
 
 	public void addCommand(CommandLine commandLine, Command command) {
@@ -19,30 +30,22 @@ public class CommandsProvider {
 	public void executeCommand(CommandLine commandLine) {
 		if (commands.containsKey(commandLine)) {
 			commands.get(commandLine).execute();
-		} 
-//		else if (commandLine.getCommandName().equals("prompt")) {
-//			addCommand(new CommandLine("prompt"), new PromptParam(getPrompt(), commandLine.getCommandParameter()));
-		//		}
-	else {
-			System.out.println(commandLine.getCommandName() + " : unknown command");
+		} else {
+			try {
+				commandCreator.createCommand(commandLine);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
-		
-
 	}
 
 	public static CommandsProvider init() {
 		CommandsProvider commandsProvider = new CommandsProvider();
 
-		commandsProvider.prompt = new Prompt();
-
-		commandsProvider.addCommand(new CommandLine("prompt"), commandsProvider.getPrompt());
-
+		commandsProvider.addCommand(new CommandLine("prompt", "$cwd"), new PromptCwd());
 		commandsProvider.addCommand(new CommandLine("prompt", "reset"), new PromptReset(commandsProvider.getPrompt()));
-
 		commandsProvider.addCommand(new CommandLine("dir"), new Dir());
-
 		commandsProvider.addCommand(new CommandLine("tree"), new Tree());
-
 		commandsProvider.addCommand(new CommandLine("exit"), new Exit());
 
 		return commandsProvider;

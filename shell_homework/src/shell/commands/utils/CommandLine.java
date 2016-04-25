@@ -1,4 +1,4 @@
-package shell.commands;
+package shell.commands.utils;
 
 import java.util.Objects;
 

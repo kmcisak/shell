@@ -1,4 +1,4 @@
-package shell.commands;
+package shell.commands.interfaces;
 
 public interface Command {
 	
