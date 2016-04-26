@@ -42,7 +42,7 @@ public class CommandsProvider {
 	public static CommandsProvider init() {
 		CommandsProvider commandsProvider = new CommandsProvider();
 
-		commandsProvider.addCommand(new CommandLine("prompt", "$cwd"), new PromptCwd());
+		commandsProvider.addCommand(new CommandLine("prompt", "$cwd"), new PromptCwd(commandsProvider.getPrompt()));
 		commandsProvider.addCommand(new CommandLine("prompt", "reset"), new PromptReset(commandsProvider.getPrompt()));
 		commandsProvider.addCommand(new CommandLine("dir"), new Dir());
 		commandsProvider.addCommand(new CommandLine("tree"), new Tree());

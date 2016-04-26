@@ -4,11 +4,21 @@ import shell.commands.interfaces.Command;
 
 public class PromptCwd implements Command {
 	
-	public PromptCwd() {
+	Prompt prompt;
+	
+	public PromptCwd(Prompt prompt) {
+		this.prompt = prompt;
 	}
 
 	@Override
 	public void execute() {
-		System.out.println("cwd execute...");
+		setCwd(prompt);
 	}
+	
+	private void setCwd(Prompt prompt) {
+		Cwd cwd = new Cwd();
+		cwd.updateCwd();
+		prompt.setCwd(cwd);
+	}
+	
 }
