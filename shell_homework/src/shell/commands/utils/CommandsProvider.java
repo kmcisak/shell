@@ -5,6 +5,7 @@ import java.util.Map;
 
 import shell.commands.Dir;
 import shell.commands.Exit;
+import shell.commands.ParentDir;
 import shell.commands.Prompt;
 import shell.commands.PromptCwd;
 import shell.commands.PromptReset;
@@ -44,9 +45,10 @@ public class CommandsProvider {
 
 		commandsProvider.addCommand(new CommandLine("prompt", "$cwd"), new PromptCwd(commandsProvider.getPrompt()));
 		commandsProvider.addCommand(new CommandLine("prompt", "reset"), new PromptReset(commandsProvider.getPrompt()));
-		commandsProvider.addCommand(new CommandLine("dir"), new Dir());
-		commandsProvider.addCommand(new CommandLine("tree"), new Tree());
+		commandsProvider.addCommand(new CommandLine("dir"), new Dir(commandsProvider.getPrompt()));
+		commandsProvider.addCommand(new CommandLine("tree"), new Tree(commandsProvider.getPrompt()));
 		commandsProvider.addCommand(new CommandLine("exit"), new Exit());
+		commandsProvider.addCommand(new CommandLine("cd", ".."), new ParentDir(commandsProvider.getPrompt()));
 
 		return commandsProvider;
 	}

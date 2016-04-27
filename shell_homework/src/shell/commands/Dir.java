@@ -6,9 +6,15 @@ import shell.commands.interfaces.Command;
 
 public class Dir implements Command {
 
+	Prompt prompt;
+
+	public Dir(Prompt prompt) {
+		this.prompt = prompt;
+	}
+
 	@Override
 	public void execute() {
-		File dir = new File(".");
+		File dir = new File(prompt.getCurrentCwd().toString());
 		printDir(dir);
 	}
 

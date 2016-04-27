@@ -8,11 +8,16 @@ public class Cwd {
 	String cwd;
 	File file;
 
-	public Cwd() {
-		file = new File(".");
+//	public Cwd() {
+//		this.file = new File(".");
+//	}
+	
+	public Cwd(File file) {
+		this.file = file;
+		updateCwdName();
 	}
 
-	public void updateCwd() {
+	public void updateCwdName() {
 		try {
 			this.cwd = file.getCanonicalPath();
 		} catch (IOException e) {
@@ -24,6 +29,14 @@ public class Cwd {
 	@Override
 	public String toString() {
 		return cwd;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public File getFile() {
+		return file;
 	}
 
 }
