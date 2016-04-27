@@ -1,19 +1,30 @@
 package shell.commands.utils;
 
+import shell.commands.Cd;
 import shell.commands.Prompt;
+import shell.commands.interfaces.Command;
 
 public class CommandCreator {
-
+	
 	Prompt prompt;
-
-	public CommandCreator(Prompt prompt) {
+	CommandLine commandLine;
+	
+	public CommandCreator(Prompt prompt, CommandLine commandLine) {
+		this.commandLine = commandLine;
 		this.prompt = prompt;
 	}
 
-	public void createCommand(CommandLine commandLine) throws Exception {
+	public  Command createCommand() throws Exception {
 		if (commandLine.getCommandName().equals("prompt")) {
 			prompt.setParameter(commandLine.getCommandParameter());
-		} else {
+			return prompt;
+		} else if (commandLine.getCommandName().equals("cd")) {
+			Cd cd = new Cd(prompt, commandLine);
+			
+			return cd.returnCd();
+			
+		} 
+		else {
 			throw new Exception(commandLine.getCommandName() + " : unknown command");
 		}
 	}

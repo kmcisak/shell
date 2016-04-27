@@ -8,10 +8,6 @@ public class Cwd {
 	String cwd;
 	File file;
 
-//	public Cwd() {
-//		this.file = new File(".");
-//	}
-	
 	public Cwd(File file) {
 		this.file = file;
 		updateCwdName();
@@ -21,7 +17,6 @@ public class Cwd {
 		try {
 			this.cwd = file.getCanonicalPath();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

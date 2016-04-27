@@ -3,6 +3,7 @@ package shell.commands.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import shell.commands.Cd;
 import shell.commands.Dir;
 import shell.commands.Exit;
 import shell.commands.ParentDir;
@@ -21,7 +22,7 @@ public class CommandsProvider {
 	private CommandsProvider() {
 		commands = new HashMap<>();
 		prompt = new Prompt("$");
-		commandCreator = new CommandCreator(prompt);
+		// commandCreator = new CommandCreator(prompt);
 	}
 
 	public void addCommand(CommandLine commandLine, Command command) {
@@ -33,7 +34,8 @@ public class CommandsProvider {
 			commands.get(commandLine).execute();
 		} else {
 			try {
-				commandCreator.createCommand(commandLine);
+				CommandCreator commandCreator = new CommandCreator(prompt, commandLine);
+				commandCreator.createCommand().execute();
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -48,7 +50,6 @@ public class CommandsProvider {
 		commandsProvider.addCommand(new CommandLine("dir"), new Dir(commandsProvider.getPrompt()));
 		commandsProvider.addCommand(new CommandLine("tree"), new Tree(commandsProvider.getPrompt()));
 		commandsProvider.addCommand(new CommandLine("exit"), new Exit());
-		commandsProvider.addCommand(new CommandLine("cd", ".."), new ParentDir(commandsProvider.getPrompt()));
 
 		return commandsProvider;
 	}

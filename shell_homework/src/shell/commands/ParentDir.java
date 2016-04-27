@@ -15,9 +15,7 @@ public class ParentDir implements Command {
 	@Override
 	public void execute() {
 		Cwd cwd = new Cwd(new File(".."));
-		cwd.updateCwdName();
 		prompt.setCwd(cwd);
 		System.setProperty("user.dir", prompt.getCurrentCwd().cwd);
 	}
-
 }
